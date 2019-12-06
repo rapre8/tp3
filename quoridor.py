@@ -288,3 +288,4 @@ class Quoridor:
             if i not in list(product(range(1, 10), repeat=2)):
                 self.gamestate['murs']['horizontaux'].pop()
                 raise QuoridorError("Position mur horizontal invalide")
+

@@ -64,12 +64,6 @@ class QuoridorX(Quoridor):
             raise QuoridorError("Plus de deux joueurs")
 
 
-
-
-
-
-
-
-
     def afficher(self):
         'g'
+
