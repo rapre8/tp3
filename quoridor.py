@@ -198,6 +198,7 @@ class Quoridor:
     def jouer_coup(self, joueur):
         '''Permet de jouer automatiquement le coup'''
 
+        # SECTION OK
         graphe = construire_graphe(
             [joueur['pos'] for joueur in self.gamestate['joueurs']],
             self.gamestate['murs']['horizontaux'],
@@ -211,9 +212,14 @@ class Quoridor:
         position_a_aller_j2 = nx.shortest_path(
             graphe,
             tuple(self.gamestate['joueurs'][1]['pos']), 'B2')
+        
+        # SECTION OK
+
+        # proc ordinaire
 
         if joueur == 1:
             if len(position_a_aller_j1) <= len(position_a_aller_j2):
+                print(position_a_aller_j1)
                 self.déplacer_jeton(joueur, position_a_aller_j1[1])
 
             else:
@@ -228,10 +234,10 @@ class Quoridor:
                 except QuoridorError:
                     self.jouer_coup(1)
 
+
         if joueur == 2:
             if len(position_a_aller_j1) >= len(position_a_aller_j2):
                 self.déplacer_jeton(joueur, position_a_aller_j2[1])
-
 
             else:
                 if self.gamestate['joueurs'][1]['murs'] == 0:
@@ -244,6 +250,7 @@ class Quoridor:
                     self.gamestate['joueurs'][1]['murs'] -= 1
                 except QuoridorError:
                     self.jouer_coup(2)
+
 
     def partie_terminée(self):
         '''Permet de savoir si la partie est terminée'''
@@ -264,8 +271,24 @@ class Quoridor:
 
         murs_horiz = self.gamestate['murs']['horizontaux']
         murs_verti = self.gamestate['murs']['verticaux']
-        if position in murs_horiz or position in murs_verti:
-            raise QuoridorError('un mur occupe déjà cette position')
+        if orientation == 'horizontal':
+            if position in murs_horiz:
+                raise QuoridorError('un mur occupe déjà cette position')
+        if orientation == 'vertical':
+            if position in murs_verti:
+                raise QuoridorError('un mur occupe déjà cette position')
+
+        if orientation == 'horizontal':
+            for i in murs_horiz:
+                if position[1] == i[1]:
+                    if position[0] == i[0] + 1 or i[0] -1:
+                        raise QuoridorError('un mur occupe déjà cette position')
+
+        if orientation == 'vertical':
+            for i in murs_verti:
+                if position[0] == i[0]:
+                    if position[1] == i[1] + 1 or i[1] - 1:
+                        raise QuoridorError('un mur occupe déjà cette position')
 
         self.gamestate['joueurs'][joueur-1]['murs'] = self.gamestate['joueurs'][joueur-1]['murs']-1
         if orientation == 'horizontal':
@@ -276,7 +299,7 @@ class Quoridor:
         for i in self.gamestate['murs']['verticaux']:
             if i[0] < 2 or i[1] > 8:
                 self.gamestate['murs']['verticaux'].pop()
-                raise QuoridorError("Position mur vertical invalide")
+                raise QuoridorError("Position mur vertical invalide") 
             if i not in list(product(range(1, 10), repeat=2)):
                 self.gamestate['murs']['verticaux'].pop()
                 raise QuoridorError("Position mur vertical invalide")
@@ -289,3 +312,18 @@ class Quoridor:
                 self.gamestate['murs']['horizontaux'].pop()
                 raise QuoridorError("Position mur horizontal invalide")
 
+a = Quoridor(['raphael', 'pierre-luc'])
+print(a)
+while True:
+    if a.partie_terminée() != False:
+        print("Le gagnant est " + a.partie_terminée())
+        break
+    print("C'est le tour de raphael")
+    a.jouer_coup(1)
+    print(a)
+    if a.partie_terminée() != False:
+        print("Le gagnant est " + a.partie_terminée())
+        break
+    print("C'est le coup de PL")
+    a.jouer_coup(2)
+    print(a)

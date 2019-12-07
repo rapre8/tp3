@@ -3,7 +3,7 @@ import argparse
 import random
 from itertools import product
 import networkx as nx
-from api import lister_parties, débuter_partie, jouer_coup
+from api import débuter_partie, jouer_coup
 from quoridor import QuoridorError, Quoridor
 
 
