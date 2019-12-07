@@ -143,6 +143,9 @@ class Quoridor:
         if len(joueurs) > 2:
             raise QuoridorError("Plus de deux joueurs")
 
+        self.position_interdites_horiz = []
+        self.position_interdites_verti = []
+
     def __str__(self):
         nom1 = f'1={self.gamestate["joueurs"][0]["nom"]}, '
         nom2 = f'2={self.gamestate["joueurs"][1]["nom"]}'
@@ -215,11 +218,10 @@ class Quoridor:
         
         # SECTION OK
 
-        # proc ordinaire
 
+        # proc ordinaire
         if joueur == 1:
             if len(position_a_aller_j1) <= len(position_a_aller_j2):
-                print(position_a_aller_j1)
                 self.déplacer_jeton(joueur, position_a_aller_j1[1])
 
             else:
@@ -266,29 +268,37 @@ class Quoridor:
             if joueur != 2:
                 raise QuoridorError('le numéro du joueur doit être 1 ou 2')
 
-        if self.gamestate['joueurs'][joueur-1]['murs'] == 0:
-            raise QuoridorError('le joueur a déjà placé tous ses murs')
+        if joueur == 1:
+            if self.gamestate['joueurs'][0]['murs'] == 0:
+                raise QuoridorError('le joueur a déjà placé tous ses murs')
+        
+        if joueur == 2:
+            if self.gamestate['joueurs'][0]['murs'] == 0:
+                raise QuoridorError('le joueur a déjà placé tous ses murs')
 
         murs_horiz = self.gamestate['murs']['horizontaux']
         murs_verti = self.gamestate['murs']['verticaux']
-        if orientation == 'horizontal':
-            if position in murs_horiz:
-                raise QuoridorError('un mur occupe déjà cette position')
-        if orientation == 'vertical':
-            if position in murs_verti:
-                raise QuoridorError('un mur occupe déjà cette position')
+
+        # Interdits horiz
+        for i in murs_horiz:
+            self.position_interdites_horiz.append((i[0] - 1, i[1]))
+            self.position_interdites_horiz.append((i[0], i[1]))
+            self.position_interdites_horiz.append((i[0] + 1, i[1]))
+        
+        # Interdits verti
+        for i in murs_verti:
+            self.position_interdites_verti.append((i[0], i[1] - 1))
+            self.position_interdites_verti.append((i[0], i[1]))
+            self.position_interdites_verti.append((i[0], i[1] + 1))
+
 
         if orientation == 'horizontal':
-            for i in murs_horiz:
-                if position[1] == i[1]:
-                    if position[0] == i[0] + 1 or i[0] -1:
-                        raise QuoridorError('un mur occupe déjà cette position')
+            if position in self.position_interdites_horiz:
+                raise QuoridorError('un mur occupe déjà cette position')
 
         if orientation == 'vertical':
-            for i in murs_verti:
-                if position[0] == i[0]:
-                    if position[1] == i[1] + 1 or i[1] - 1:
-                        raise QuoridorError('un mur occupe déjà cette position')
+            if position in self.position_interdites_verti:
+                raise QuoridorError('un mur occupe déjà cette position')
 
         self.gamestate['joueurs'][joueur-1]['murs'] = self.gamestate['joueurs'][joueur-1]['murs']-1
         if orientation == 'horizontal':
@@ -313,7 +323,24 @@ class Quoridor:
                 raise QuoridorError("Position mur horizontal invalide")
 
 a = Quoridor(['raphael', 'pierre-luc'])
+a.placer_mur(3, (5, 5), 'horizontal')
+a.placer_mur(2, (5, 5), 'horizontal')
+a.placer_mur(2, (5, 4), 'horizontal')
+a.placer_mur(2, (5, 3), 'horizontal')
+a.placer_mur(2, (5, 2), 'horizontal')
+a.placer_mur(2, (5, 6), 'horizontal')
+a.placer_mur(2, (5, 7), 'horizontal')
+a.placer_mur(2, (8, 2), 'horizontal')
+a.placer_mur(2, (8, 3), 'horizontal')
+a.placer_mur(2, (8, 4), 'horizontal')
+a.placer_mur(2, (8, 5), 'horizontal')
+a.jouer_coup(1)
+a.jouer_coup(2)
 print(a)
+print('le nombre de murs du j1 est ' + str(a.état_partie()['joueurs'][0]['murs']))
+print('le nombre de murs du j2 est ' + str(a.état_partie()['joueurs'][1]['murs']))
+
+'''
 while True:
     if a.partie_terminée() != False:
         print("Le gagnant est " + a.partie_terminée())
@@ -327,3 +354,4 @@ while True:
     print("C'est le coup de PL")
     a.jouer_coup(2)
     print(a)
+'''
