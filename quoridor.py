@@ -1,5 +1,6 @@
 '''Programme qui permet d'utiliser l'intelligence artificielle'''
 import random
+import sys
 from itertools import product
 import networkx as nx
 
@@ -215,25 +216,19 @@ class Quoridor:
         position_a_aller_j2 = nx.shortest_path(
             graphe,
             tuple(self.gamestate['joueurs'][1]['pos']), 'B2')
-        
-        # SECTION OK
 
-        # Section pour murs == 0
+        # JOUER COUP
         if joueur == 1:
-            if self.gamestate['joueurs'][0]['murs'] == 0:
+
+            # SI MURS == 0 
+            if self.gamestate['joueurs'][0]['murs'] <= 0:
                 self.déplacer_jeton(joueur, position_a_aller_j1[1])
 
-        if joueur == 2:
-            if self.gamestate['joueurs'][1]['murs'] == 0:
-                self.déplacer_jeton(joueur, position_a_aller_j2[1])
-
-        # proc ordinaire
-        if joueur == 1:
+            # SI CHEMIN PLUS COURT QUE L'ADVERSAIRE
             if len(position_a_aller_j1) <= len(position_a_aller_j2):
                 self.déplacer_jeton(joueur, position_a_aller_j1[1])
 
             else:
-                
                 try:
                     x = random.randint(1, 9)
                     y = random.randint(1, 9)
@@ -241,10 +236,18 @@ class Quoridor:
                     self.placer_mur(1, (x, y), orientation)
                     self.gamestate['joueurs'][0]['murs'] -= 1
                 except QuoridorError:
-                    self.jouer_coup(1)
+                    # self.jouer_coup(1)
+                    self.déplacer_jeton(joueur, position_a_aller_j1[1])
+
 
 
         if joueur == 2:
+
+            # SI MURS == 0
+            if self.gamestate['joueurs'][1]['murs'] <= 0:
+                self.déplacer_jeton(joueur, position_a_aller_j2[1])
+
+            # SI CHEMIN PLUS COURT QUE ADVERSAIRE
             if len(position_a_aller_j1) >= len(position_a_aller_j2):
                 self.déplacer_jeton(joueur, position_a_aller_j2[1])
 
@@ -257,8 +260,8 @@ class Quoridor:
                     self.placer_mur(1, (x, y), orientation)
                     self.gamestate['joueurs'][1]['murs'] -= 1
                 except QuoridorError:
-                    self.jouer_coup(2)
-
+                    # self.jouer_coup(2)
+                    self.déplacer_jeton(joueur, position_a_aller_j2[1])
 
     def partie_terminée(self):
         '''Permet de savoir si la partie est terminée'''
@@ -328,36 +331,220 @@ class Quoridor:
                 self.gamestate['murs']['horizontaux'].pop()
                 raise QuoridorError("Position mur horizontal invalide")
 
-a = Quoridor(['raphael', 'pierre-luc'])
+
+
+# TESTS
 
 '''
-a.placer_mur(2, (5, 5), 'horizontal')
-a.placer_mur(2, (5, 4), 'horizontal')
-a.placer_mur(2, (5, 3), 'horizontal')
-a.placer_mur(2, (5, 2), 'horizontal')
-a.placer_mur(2, (5, 6), 'horizontal')
-a.placer_mur(2, (5, 7), 'horizontal')
+GAME = Quoridor(['raphael', 'Jacob'])
+print(GAME)
+while True:
+    try:
+        GAME.jouer_coup(1)
+        print(GAME)
+        GAME.jouer_coup(2)
+        print(GAME)
+    except QuoridorError as err:
+        print(err)
+        print(f'le gagnant est {GAME.partie_terminée()}!')
+        break
+'''
+
+
+
+a = Quoridor(['raphael', 'pierre-luc'])
+print(a)
+
+
+'''
+# 1er tour
+print("C'est le coup de j1")
+a.jouer_coup(1)
+if a.partie_terminée() is not False:
+    print("Le gagnant est " + a.partie_terminée())
+    sys.exit()
+print(a)
+print("C'est le coup de j2")
+a.jouer_coup(2)
+if a.partie_terminée() is not False:
+    print("Le gagnant est " + a.partie_terminée())
+    sys.exit()
+print(a)
+
+# 2e tour
+print("C'est le coup de j1")
+a.jouer_coup(1)
+if a.partie_terminée() is not False:
+    print("Le gagnant est " + a.partie_terminée())
+    sys.exit()
+print(a)
+print("C'est le coup de j2")
+a.jouer_coup(2)
+if a.partie_terminée() is not False:
+    print("Le gagnant est " + a.partie_terminée())
+    sys.exit()
+print(a)
+
+# 3e tour
+print("C'est le coup de j1")
+a.jouer_coup(1)
+if a.partie_terminée() is not False:
+    print("Le gagnant est " + a.partie_terminée())
+    sys.exit()
+print(a)
+print("C'est le coup de j2")
+a.jouer_coup(2)
+if a.partie_terminée() is not False:
+    print("Le gagnant est " + a.partie_terminée())
+    sys.exit()
+print(a)
+
+# 4e tour
+print("C'est le coup de j1")
+a.jouer_coup(1)
+if a.partie_terminée() is not False:
+    print("Le gagnant est " + a.partie_terminée())
+    sys.exit()
+print(a)
+print("C'est le coup de j2")
+a.jouer_coup(2)
+if a.partie_terminée() is not False:
+    print("Le gagnant est " + a.partie_terminée())
+    sys.exit()
+print(a)
+
+# 5e tour
+print("C'est le coup de j1")
+a.jouer_coup(1)
+if a.partie_terminée() is not False:
+    print("Le gagnant est " + a.partie_terminée())
+    sys.exit()
+print(a)
+print("C'est le coup de j2")
+a.jouer_coup(2)
+if a.partie_terminée() is not False:
+    print("Le gagnant est " + a.partie_terminée())
+    sys.exit()
+print(a)
+
+# 6e tour
+print("C'est le coup de j1")
+a.jouer_coup(1)
+if a.partie_terminée() is not False:
+    print("Le gagnant est " + a.partie_terminée())
+    sys.exit()
+print(a)
+print("C'est le coup de j2")
+a.jouer_coup(2)
+if a.partie_terminée() is not False:
+    print("Le gagnant est " + a.partie_terminée())
+    sys.exit()
+print(a)
+
+#7e tour
+print("C'est le coup de j1")
+a.jouer_coup(1)
+if a.partie_terminée() is not False:
+    print("Le gagnant est " + a.partie_terminée())
+    sys.exit()
+print(a)
+print("C'est le coup de j2")
+a.jouer_coup(2)
+if a.partie_terminée() is not False:
+    print("Le gagnant est " + a.partie_terminée())
+    sys.exit()
+print(a)
+
+#8e tour
+print("C'est le coup de j1")
+a.jouer_coup(1)
+if a.partie_terminée() is not False:
+    print("Le gagnant est " + a.partie_terminée())
+    sys.exit()
+print(a)
+print("C'est le coup de j2")
+a.jouer_coup(2)
+if a.partie_terminée() is not False:
+    print("Le gagnant est " + a.partie_terminée())
+    sys.exit()
+print(a)
+
+#9e tour
+print("C'est le coup de j1")
+a.jouer_coup(1)
+if a.partie_terminée() is not False:
+    print("Le gagnant est " + a.partie_terminée())
+    sys.exit()
+print(a)
+print("C'est le coup de j2")
+a.jouer_coup(2)
+if a.partie_terminée() is not False:
+    print("Le gagnant est " + a.partie_terminée())
+    sys.exit()
+print(a)
+
+#10e tour
+print("C'est le coup de j1")
+a.jouer_coup(1)
+if a.partie_terminée() is not False:
+    print("Le gagnant est " + a.partie_terminée())
+    sys.exit()
+print(a)
+print("C'est le coup de j2")
+a.jouer_coup(2)
+if a.partie_terminée() is not False:
+    print("Le gagnant est " + a.partie_terminée())
+    sys.exit()
+print(a)
+'''
+
+
+
+
+
+'''
+a.placer_mur(2, (1, 2), 'horizontal')
+a.placer_mur(2, (8, 9), 'horizontal')
+a.placer_mur(2, (8, 8), 'horizontal')
+a.placer_mur(2, (8, 7), 'horizontal')
+a.placer_mur(2, (8, 6), 'horizontal')
+a.placer_mur(2, (8, 5), 'horizontal')
 a.placer_mur(2, (8, 2), 'horizontal')
 a.placer_mur(2, (8, 3), 'horizontal')
 a.placer_mur(2, (8, 4), 'horizontal')
-a.placer_mur(2, (6, 8), 'horizontal')
-a.jouer_coup(2)
-print(a)
 print('le nombre de murs du j1 est ' + str(a.état_partie()['joueurs'][0]['murs']))
 print('le nombre de murs du j2 est ' + str(a.état_partie()['joueurs'][1]['murs']))
+print(a)
+print("C'est le coup du j1")
+a.jouer_coup(1)
+print(a)
+print("C'est maintenant le coup du j2")
+a.jouer_coup(2)
+print(a)
+print("C'est maintenant le coup du j2")
+a.jouer_coup(2)
+print(a)
 '''
 
 
-while True:
-    if a.partie_terminée() != False:
-        print("Le gagnant est " + a.partie_terminée())
-        break
-    print("C'est le tour de raphael")
-    a.jouer_coup(1)
+nb_parties = 0
+while nb_parties < 50:
+    nb_parties += 1
+    a = Quoridor(['raphael', 'j2'])
     print(a)
-    if a.partie_terminée() != False:
-        print("Le gagnant est " + a.partie_terminée())
-        break
-    print("C'est le coup de PL")
-    a.jouer_coup(2)
-    print(a)
+    print(nb_parties)
+    while True:
+        if a.partie_terminée() != False:
+            print("Le gagnant est " + a.partie_terminée())
+            print("Le nombre de parties est " + str(nb_parties))
+            break
+        print("C'est le tour de raphael")
+        a.jouer_coup(1)
+        print(a)
+        if a.partie_terminée() != False:
+            print("Le gagnant est " + a.partie_terminée())
+            print("le nombre de parties est " + str(nb_parties))
+            break
+        print("C'est le coup de PL")
+        a.jouer_coup(2)
+        print(a)
