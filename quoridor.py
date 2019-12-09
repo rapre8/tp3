@@ -218,6 +218,14 @@ class Quoridor:
         
         # SECTION OK
 
+        # Section pour murs == 0
+        if joueur == 1:
+            if self.gamestate['joueurs'][0]['murs'] == 0:
+                self.déplacer_jeton(joueur, position_a_aller_j1[1])
+
+        if joueur == 2:
+            if self.gamestate['joueurs'][1]['murs'] == 0:
+                self.déplacer_jeton(joueur, position_a_aller_j2[1])
 
         # proc ordinaire
         if joueur == 1:
@@ -225,8 +233,7 @@ class Quoridor:
                 self.déplacer_jeton(joueur, position_a_aller_j1[1])
 
             else:
-                if self.gamestate['joueurs'][0]['murs'] == 0:
-                    self.déplacer_jeton(joueur, position_a_aller_j1[1])
+                
                 try:
                     x = random.randint(1, 9)
                     y = random.randint(1, 9)
@@ -242,8 +249,7 @@ class Quoridor:
                 self.déplacer_jeton(joueur, position_a_aller_j2[1])
 
             else:
-                if self.gamestate['joueurs'][1]['murs'] == 0:
-                    self.déplacer_jeton(joueur, position_a_aller_j2[1])
+                
                 try:
                     x = random.randint(1, 9)
                     y = random.randint(1, 9)
@@ -273,7 +279,7 @@ class Quoridor:
                 raise QuoridorError('le joueur a déjà placé tous ses murs')
         
         if joueur == 2:
-            if self.gamestate['joueurs'][0]['murs'] == 0:
+            if self.gamestate['joueurs'][1]['murs'] == 0:
                 raise QuoridorError('le joueur a déjà placé tous ses murs')
 
         murs_horiz = self.gamestate['murs']['horizontaux']
@@ -323,7 +329,8 @@ class Quoridor:
                 raise QuoridorError("Position mur horizontal invalide")
 
 a = Quoridor(['raphael', 'pierre-luc'])
-a.placer_mur(3, (5, 5), 'horizontal')
+
+'''
 a.placer_mur(2, (5, 5), 'horizontal')
 a.placer_mur(2, (5, 4), 'horizontal')
 a.placer_mur(2, (5, 3), 'horizontal')
@@ -333,14 +340,14 @@ a.placer_mur(2, (5, 7), 'horizontal')
 a.placer_mur(2, (8, 2), 'horizontal')
 a.placer_mur(2, (8, 3), 'horizontal')
 a.placer_mur(2, (8, 4), 'horizontal')
-a.placer_mur(2, (8, 5), 'horizontal')
-a.jouer_coup(1)
+a.placer_mur(2, (6, 8), 'horizontal')
 a.jouer_coup(2)
 print(a)
 print('le nombre de murs du j1 est ' + str(a.état_partie()['joueurs'][0]['murs']))
 print('le nombre de murs du j2 est ' + str(a.état_partie()['joueurs'][1]['murs']))
-
 '''
+
+
 while True:
     if a.partie_terminée() != False:
         print("Le gagnant est " + a.partie_terminée())
@@ -354,4 +361,3 @@ while True:
     print("C'est le coup de PL")
     a.jouer_coup(2)
     print(a)
-'''
