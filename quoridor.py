@@ -545,6 +545,6 @@ while nb_parties < 50:
             print("Le gagnant est " + a.partie_terminée())
             print("le nombre de parties est " + str(nb_parties))
             break
-        print("C'est le coup de PL")
+        print("C'est le coup de j2")
         a.jouer_coup(2)
         print(a)
