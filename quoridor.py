@@ -236,6 +236,7 @@ class Quoridor:
                     self.placer_mur(1, (x, y), orientation)
                     self.gamestate['joueurs'][0]['murs'] -= 1
                 except QuoridorError:
+                    self.gamestate['joueurs'][0]['murs'] += 1
                     # self.jouer_coup(1)
                     self.déplacer_jeton(joueur, position_a_aller_j1[1])
 
@@ -260,6 +261,7 @@ class Quoridor:
                     self.placer_mur(1, (x, y), orientation)
                     self.gamestate['joueurs'][1]['murs'] -= 1
                 except QuoridorError:
+                    self.gamestate['joueurs'][1]['murs'] += 1
                     # self.jouer_coup(2)
                     self.déplacer_jeton(joueur, position_a_aller_j2[1])
 
@@ -335,171 +337,9 @@ class Quoridor:
 
 # TESTS
 
-'''
-GAME = Quoridor(['raphael', 'Jacob'])
-print(GAME)
-while True:
-    try:
-        GAME.jouer_coup(1)
-        print(GAME)
-        GAME.jouer_coup(2)
-        print(GAME)
-    except QuoridorError as err:
-        print(err)
-        print(f'le gagnant est {GAME.partie_terminée()}!')
-        break
-'''
-
-
 
 a = Quoridor(['raphael', 'pierre-luc'])
 print(a)
-
-
-'''
-# 1er tour
-print("C'est le coup de j1")
-a.jouer_coup(1)
-if a.partie_terminée() is not False:
-    print("Le gagnant est " + a.partie_terminée())
-    sys.exit()
-print(a)
-print("C'est le coup de j2")
-a.jouer_coup(2)
-if a.partie_terminée() is not False:
-    print("Le gagnant est " + a.partie_terminée())
-    sys.exit()
-print(a)
-
-# 2e tour
-print("C'est le coup de j1")
-a.jouer_coup(1)
-if a.partie_terminée() is not False:
-    print("Le gagnant est " + a.partie_terminée())
-    sys.exit()
-print(a)
-print("C'est le coup de j2")
-a.jouer_coup(2)
-if a.partie_terminée() is not False:
-    print("Le gagnant est " + a.partie_terminée())
-    sys.exit()
-print(a)
-
-# 3e tour
-print("C'est le coup de j1")
-a.jouer_coup(1)
-if a.partie_terminée() is not False:
-    print("Le gagnant est " + a.partie_terminée())
-    sys.exit()
-print(a)
-print("C'est le coup de j2")
-a.jouer_coup(2)
-if a.partie_terminée() is not False:
-    print("Le gagnant est " + a.partie_terminée())
-    sys.exit()
-print(a)
-
-# 4e tour
-print("C'est le coup de j1")
-a.jouer_coup(1)
-if a.partie_terminée() is not False:
-    print("Le gagnant est " + a.partie_terminée())
-    sys.exit()
-print(a)
-print("C'est le coup de j2")
-a.jouer_coup(2)
-if a.partie_terminée() is not False:
-    print("Le gagnant est " + a.partie_terminée())
-    sys.exit()
-print(a)
-
-# 5e tour
-print("C'est le coup de j1")
-a.jouer_coup(1)
-if a.partie_terminée() is not False:
-    print("Le gagnant est " + a.partie_terminée())
-    sys.exit()
-print(a)
-print("C'est le coup de j2")
-a.jouer_coup(2)
-if a.partie_terminée() is not False:
-    print("Le gagnant est " + a.partie_terminée())
-    sys.exit()
-print(a)
-
-# 6e tour
-print("C'est le coup de j1")
-a.jouer_coup(1)
-if a.partie_terminée() is not False:
-    print("Le gagnant est " + a.partie_terminée())
-    sys.exit()
-print(a)
-print("C'est le coup de j2")
-a.jouer_coup(2)
-if a.partie_terminée() is not False:
-    print("Le gagnant est " + a.partie_terminée())
-    sys.exit()
-print(a)
-
-#7e tour
-print("C'est le coup de j1")
-a.jouer_coup(1)
-if a.partie_terminée() is not False:
-    print("Le gagnant est " + a.partie_terminée())
-    sys.exit()
-print(a)
-print("C'est le coup de j2")
-a.jouer_coup(2)
-if a.partie_terminée() is not False:
-    print("Le gagnant est " + a.partie_terminée())
-    sys.exit()
-print(a)
-
-#8e tour
-print("C'est le coup de j1")
-a.jouer_coup(1)
-if a.partie_terminée() is not False:
-    print("Le gagnant est " + a.partie_terminée())
-    sys.exit()
-print(a)
-print("C'est le coup de j2")
-a.jouer_coup(2)
-if a.partie_terminée() is not False:
-    print("Le gagnant est " + a.partie_terminée())
-    sys.exit()
-print(a)
-
-#9e tour
-print("C'est le coup de j1")
-a.jouer_coup(1)
-if a.partie_terminée() is not False:
-    print("Le gagnant est " + a.partie_terminée())
-    sys.exit()
-print(a)
-print("C'est le coup de j2")
-a.jouer_coup(2)
-if a.partie_terminée() is not False:
-    print("Le gagnant est " + a.partie_terminée())
-    sys.exit()
-print(a)
-
-#10e tour
-print("C'est le coup de j1")
-a.jouer_coup(1)
-if a.partie_terminée() is not False:
-    print("Le gagnant est " + a.partie_terminée())
-    sys.exit()
-print(a)
-print("C'est le coup de j2")
-a.jouer_coup(2)
-if a.partie_terminée() is not False:
-    print("Le gagnant est " + a.partie_terminée())
-    sys.exit()
-print(a)
-'''
-
-
-
 
 
 '''
@@ -548,3 +388,4 @@ while nb_parties < 50:
         print("C'est le coup de j2")
         a.jouer_coup(2)
         print(a)
+
