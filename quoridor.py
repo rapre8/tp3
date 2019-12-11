@@ -337,9 +337,10 @@ class Quoridor:
 
 # TESTS
 
-
+'''
 a = Quoridor(['raphael', 'pierre-luc'])
 print(a)
+'''
 
 
 '''
@@ -366,7 +367,7 @@ a.jouer_coup(2)
 print(a)
 '''
 
-
+"""
 nb_parties = 0
 while nb_parties < 50:
     nb_parties += 1
@@ -388,4 +389,4 @@ while nb_parties < 50:
         print("C'est le coup de j2")
         a.jouer_coup(2)
         print(a)
-
+"""
