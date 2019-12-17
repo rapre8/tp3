@@ -1,3 +1,4 @@
+'''Permet de jouer en mode graphique (non terminé)'''
 import turtle
 from quoridor import Quoridor, QuoridorError
 
@@ -5,10 +6,12 @@ from quoridor import Quoridor, QuoridorError
 class QuoridorX(Quoridor):
     def __init__(self):
         super().__init__()
-    
+        
+
     def square(self, yoda, size):
+        '''Permet de tracer le cadre'''
         wn = turtle.Screen()
-        self.yoda = turtle.Turtle()
+        yoda = turtle.Turtle()
         wn.bgcolor("white")
         yoda.color("black")
         yoda.speed(0)
@@ -22,10 +25,12 @@ class QuoridorX(Quoridor):
         yoda.pendown()
 
     def ligne_damier(self, yoda, size):
+        '''Permet de tracer une ligne'''
         for _ in range(10):
             self.square(yoda, size)
-    
+
     def damier_complet(self, yoda, size, n):
+        '''Permet de tracer le damier complet'''
         yoda.goto(4*(-size + 40), (size+40))
 
         for _ in range(n):
@@ -34,4 +39,5 @@ class QuoridorX(Quoridor):
             yoda.right(90)
 
     def afficher_damier(self):
-        self.damier_complet(self.yoda, 100, 10)
+        '''Permet d'afficher le damier'''
+        self.damier_complet('yoda', 100, 10)
