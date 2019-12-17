@@ -33,8 +33,7 @@ def jouer_coup(id_partie, type_coup, position):
                 raise RuntimeError
             if "gagnant" in rep:
                 raise StopIteration
-            else:
-                return rep['état']
+            return rep['état']
         except (RuntimeError, StopIteration):
             if "message" in rep:
                 return rep['message']

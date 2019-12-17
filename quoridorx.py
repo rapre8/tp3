@@ -1,12 +1,12 @@
 '''Permet de jouer en mode graphique (non terminé)'''
 import turtle
-from quoridor import Quoridor, QuoridorError
+from quoridor import Quoridor
 
 
 class QuoridorX(Quoridor):
+    '''Classe pour l'affichage graphique'''
     def __init__(self):
         super().__init__()
-        
 
     def square(self, yoda, size):
         '''Permet de tracer le cadre'''

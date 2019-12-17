@@ -34,8 +34,7 @@ def décortiquer_coup_auto(pré_coup, post_coup):
         if len(post_coup['murs']['horizontaux']) > len(pré_coup['murs']['horizontaux']):
             return ['MH', tuple(post_coup['murs']['horizontaux'][-1])]
         return ['MV', tuple(post_coup['murs']['verticaux'][-1])]
-    else:
-        return ['D', tuple(post_coup['joueurs'][0]['pos'])]
+    return ['D', tuple(post_coup['joueurs'][0]['pos'])]
 
 
 def mode_automatique():
@@ -108,6 +107,7 @@ def afficher_damier_ascii(gamestate):
     return haut + milieu + bas
 
 def analyser_commande():
+    '''Permet de choisir le mode de jeu avec le module Argparse'''
     parser = argparse.ArgumentParser(description="Jeu Quoridor - phase 3")
 
     parser.add_argument('idul', type=str, help='IDUL du joueur.')
